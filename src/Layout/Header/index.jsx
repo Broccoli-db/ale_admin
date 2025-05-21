@@ -4,12 +4,13 @@ import { Button } from "antd";
 import { logOut } from "../../store/user";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import sty from "./index.module.scss";
 export default function Index() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { Header } = Layout;
   const {
-    token: { colorBgContainer, },
+    token: { colorBgContainer },
   } = theme.useToken();
   const quit = () => {
     dispatch(logOut());
@@ -23,7 +24,7 @@ export default function Index() {
           background: colorBgContainer,
         }}
       >
-        <div>
+        <div className={sty.box}>
           <Button type="primary" onClick={quit}>
             退出
           </Button>

@@ -1,8 +1,13 @@
 .example {
-  margin: 20px 0;
+  width: 100vw;
+  height: 100vh;
+  // margin: 20px 0;
   /*margin-bottom: 20px;*/
-  padding: 30px 50px;
-  text-align: center;
-  /*background: rgba(0, 0, 0, 0.05);*/
-  border-radius: 4px;
+  // padding: 30px 50px;
+  // text-align: center;
+  background: rgba(0, 0, 0, 0.05);
+  // border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

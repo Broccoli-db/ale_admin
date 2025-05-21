@@ -5,7 +5,7 @@ import { login, getInfoApi } from "@/api/login";
 const user = createSlice({
   name: "user",
   initialState: {
-    token: cache.local.get("token") || "",
+    token: cache.session.get("token") || "",
     userInfo: JSON.parse(cache.session.get("userInfo")) || {},
   },
   reducers: {
@@ -17,7 +17,7 @@ const user = createSlice({
     goOutLogin(state) {
       state.token = null;
       state.userInfo = {};
-      cache.local.remove("token");
+      cache.session.remove("token");
       cache.session.remove("userInfo");
       //   window.location.reload();
     },
@@ -29,7 +29,7 @@ const user = createSlice({
       .addCase(logIn.fulfilled, (state, { payload }) => {
         if (payload.code == 200) {
           setToken(payload.data.token);
-          cache.local.set("token", payload.data.token);
+          cache.session.set("token", payload.data.token);
           state.token = payload.data.token;
         }
       })

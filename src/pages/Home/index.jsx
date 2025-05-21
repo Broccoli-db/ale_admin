@@ -1,11 +1,5 @@
-import React, { useEffect, use } from "react";
-import { useUserSate } from "../../store/user";
-import { ContextProvider } from "@/context"
+import React from "react";
+
 export default function Index() {
-  const user = useUserSate();
-  const state = use(ContextProvider);
-  useEffect(() => {
-    console.log("home", user.userInfo, state);
-  }, []);
-  return <div>home</div>;
+  return <div></div>;
 }

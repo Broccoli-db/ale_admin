@@ -1,6 +1,11 @@
 import React, { Suspense, lazy, useMemo } from "react";
 import { Navigate, Outlet, useRoutes } from "react-router-dom";
-import { HomeOutlined, SettingOutlined, BarsOutlined } from "@ant-design/icons";
+import {
+  HomeOutlined,
+  SettingOutlined,
+  BarsOutlined,
+  RedditOutlined,
+} from "@ant-design/icons";
 import Authentication from "@/components/Authentication";
 import Loading from "@/components/Loading";
 import { useUserSate } from "../store/user";
@@ -15,9 +20,9 @@ const useRenderElement = function (pageName, isAuth = true, cache = false) {
     } else {
       return cache
         ? withKeepAlive(
-          lazy(() => modules[`/src/pages/${pageName}/index.jsx`]()),
-          { cacheId: pageName, scroll: true }
-        )
+            lazy(() => modules[`/src/pages/${pageName}/index.jsx`]()),
+            { cacheId: pageName, scroll: true }
+          )
         : lazy(() => modules[`/src/pages/${pageName}/index.jsx`]());
     }
   }, [pageName]);
@@ -63,6 +68,32 @@ const useRouter = function () {
 function useAllAsyncRoutes() {
   return [
     {
+      path: "/webFunction",
+      title: "相关功能",
+      name: "WebFunction",
+      icon: <RedditOutlined />,
+      element: <Outlet />,
+      children: [
+        {
+          path: "/webFunction",
+          isHide: true,
+          element: <Navigate to={"/webFunction/whiteboard"} />,
+        },
+        {
+          path: "/webFunction/whiteboard",
+          title: "白板",
+          name: "Whiteboard",
+          element: useRenderElement("Whiteboard", true, true),
+        },
+        {
+          path: "/webFunction/screenSharing",
+          title: "屏幕共享",
+          name: "ScreenSharing",
+          element: useRenderElement("ScreenSharing", true, true),
+        },
+      ],
+    },
+    {
       // 系统管理
       path: "/system",
       title: "系统管理",
@@ -71,7 +102,7 @@ function useAllAsyncRoutes() {
       element: <Outlet />,
       children: [
         {
-          path: "/product",
+          path: "/system",
           isHide: true,
           element: <Navigate to={"/system/permission"} />,
         },
@@ -91,7 +122,11 @@ function useFilterRoutes() {
   const { userInfo } = useUserSate();
   let routes = userInfo.routes || [];
   const allAsyncRoutes = useAllAsyncRoutes();
-  return filterRoutes(allAsyncRoutes, routes);
+  if (routes[0] === "*") {
+    return allAsyncRoutes;
+  } else {
+    return filterRoutes(allAsyncRoutes, routes);
+  }
 }
 function filterRoutes(allAsyncRoutes, routes) {
   return allAsyncRoutes.filter((item) => {

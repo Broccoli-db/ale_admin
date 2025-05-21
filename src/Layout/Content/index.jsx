@@ -11,7 +11,8 @@ export default function Index() {
     <>
       <Content
         style={{
-          margin: "0 16px",
+          margin: " 16px",
+          marginBottom: 0,
         }}
       >
         {/* <Breadcrumb
@@ -26,6 +27,7 @@ export default function Index() {
           style={{
             padding: 24,
             minHeight: 360,
+            height: "calc(100vh - 148px)",
             background: colorBgContainer,
             borderRadius: borderRadiusLG,
           }}

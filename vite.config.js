@@ -7,8 +7,6 @@ const cacheDir = ".vite_cache";
 export default defineConfig(({ mode, command }) => {
   const env = loadEnv(mode, process.cwd());
   const { VITE_APP_ENV } = env;
-  console.log(VITE_APP_ENV);
-
   return {
     base: VITE_APP_ENV === "production" ? "/" : "/",
     plugins: createVitePlugins(env, command === "build"),
@@ -88,15 +86,15 @@ export default defineConfig(({ mode, command }) => {
       hmr: {
         overlay: false, // 禁用热更新错误遮罩
       },
-      watch: {
-        ignored: [
-          "**/node_modules/**",
-          "**/.git/**",
-          "**/zk-learning-network-ui/**",
-          "**/coverage/**",
-          "**/.vscode/**",
-        ],
-      },
+      // watch: {
+      //   ignored: [
+      //     "**/node_modules/**",
+      //     "**/.git/**",
+      //     "**/zk-learning-network-ui/**",
+      //     "**/coverage/**",
+      //     "**/.vscode/**",
+      //   ],
+      // },
       middlewareMode: false,
       force: true,
       proxy: {
@@ -137,8 +135,8 @@ export default defineConfig(({ mode, command }) => {
       },
     },
     optimizeDeps: {
-      // include: ["vue", "vue-router", "pinia"], // 预构建常用依赖
-      // exclude: ["moment"], // 排除不需要预构建的依赖
+      include: ["react", "react-router-dom", "react-redux","@reduxjs/toolkit"], // 预构建常用依赖
+      exclude: [], // 排除不需要预构建的依赖
       // 缓存目录
       cacheDir: cacheDir,
     },

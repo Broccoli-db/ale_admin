@@ -1,23 +1,22 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button, Form, Input } from "antd";
 import { useAllState } from "@/hooks";
 import sty from "./index.module.scss";
 import { logIn } from "../../store/user";
-import { useDispatch, } from "react-redux";
+import { useDispatch } from "react-redux";
 import { message } from "antd";
 import { useNavigate } from "react-router-dom";
 export default function Index() {
   const navigate = useNavigate();
   const container = useRef(null);
   const [show, setShow] = useState(false);
-  const [loginInfo,] = useAllState({
+  const [loginInfo] = useAllState({
     username: "admin",
     password: "123456",
   });
   const dispatch = useDispatch();
   const [messageApi, contextHolder] = message.useMessage();
 
-  useEffect(() => { });
   const SignUp = () => {
     setShow(true);
   };

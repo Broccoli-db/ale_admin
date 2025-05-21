@@ -1,16 +1,16 @@
-import React, { useEffect, useLayoutEffect, memo } from "react";
+import React from "react";
 // import { getUserInfo, goOutLogin, useAdmin } from "@/store/slices/admin";
 import { getInfo, useUserSate } from "../../store/user";
-import { useAppDispatch } from "@/hooks";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { getToken, cache } from "../../utils";
+import { useDispatch } from "react-redux";
+
 export default function Authentication(props) {
-  const dispatch = useAppDispatch();
-  const { token, userInfo } = useUserSate();
+  const dispatch = useDispatch();
+  const { token } = useUserSate();
   const tokens = getToken();
   const location = useLocation();
-  useEffect(() => {
-  });
+
   if (getToken()) {
     if (location.pathname === "/login") {
       return <Navigate to={"/"} />;
