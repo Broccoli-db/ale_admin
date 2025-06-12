@@ -10,22 +10,21 @@ import Authentication from "@/components/Authentication";
 import Loading from "@/components/Loading";
 import { useUserSate } from "../store/user";
 import { withKeepAlive } from "keepalive-react-component";
-const modules = import.meta.glob("/src/pages/**/index.jsx");
-const Layout = import.meta.glob("/src/**/index.jsx");
+const pages = import.meta.glob("/src/**/index.jsx");
 const useRenderElement = function (pageName, isAuth = true, cache = false) {
   const { token } = useUserSate();
   const SusCom = useMemo(() => {
-    if (pageName === "Layout") {
-      return lazy(() => Layout[`/src/${pageName}/index.jsx`]());
-    } else {
-      return cache
-        ? withKeepAlive(
-            lazy(() => modules[`/src/pages/${pageName}/index.jsx`]()),
-            { cacheId: pageName, scroll: true }
-          )
-        : lazy(() => modules[`/src/pages/${pageName}/index.jsx`]());
-    }
-  }, [pageName]);
+    const filePath =
+      pageName === "Layout"
+        ? "/src/layout/index.jsx"
+        : `/src/pages/${pageName}/index.jsx`;
+
+    const importFn = pages[filePath];
+    const LazyComponent = lazy(importFn);
+    return cache
+      ? withKeepAlive(LazyComponent, { cacheId: pageName, scroll: true })
+      : LazyComponent;
+  }, [pageName, cache]);
   const suspense = (
     <Suspense fallback={<Loading></Loading>}>
       <SusCom />
